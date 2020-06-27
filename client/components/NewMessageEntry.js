@@ -1,6 +1,24 @@
 import React, { Component } from 'react';
+import store from '../store';
+import Axios from 'axios';
 
 export default class NewMessageEntry extends Component {
+  constructor(){
+    super()
+    this.state = store.getState();
+  }
+
+  componentDidMount(){
+    this.unsubscribe = store.subscribe(() => this.setState(store.getState()));
+  }
+
+  componentWillUnmount(){
+    this.unsubscribe();
+  }
+
+  async post(message){
+    await Axios.post('http://localhost:8080/api/messages/', {} )
+  }
 
   render () {
     return (
